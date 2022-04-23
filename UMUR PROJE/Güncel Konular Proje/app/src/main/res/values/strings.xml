@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">UmurZelcek</string>
+    <string name="username_text">Adinizi Giriniz</string>
+    <string name="start_button">Teste basla!</string>
+    <string name="info">Bu test renk körlüğünün teşhisi için kullanılabilecek olsa da asıl teşhis ancak detaylı göz muayenesi aracılığıyla konulabilir.</string>
+    <string name="dikkat">Dikkat!</string>
+</resources>
