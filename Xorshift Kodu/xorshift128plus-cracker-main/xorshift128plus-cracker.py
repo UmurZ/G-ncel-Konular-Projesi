@@ -2,11 +2,7 @@ import z3
 import sys
 import itertools
 
-"""
-Only works on math.random() in Firefox doesn't work on Chrome 
-"""
 
-# XorShift128+ algorithm in python
 class XorShift128Plus(object):
     def __init__(self, s0, s1):
         self.s0 = s0
@@ -17,7 +13,6 @@ class XorShift128Plus(object):
         val = (self.s0 + self.s1) & 0x1fffffffffffff
         return float(val) / 2**53
     
-    # This function generates another 64-bit integer
     def __next__(self):
         s1 = self.state[0]
         s0 = self.state[1]
@@ -31,7 +26,6 @@ class XorShift128Plus(object):
         
         return random_val
     
-    # This function generates another floating point-type number in the range [0,1)
     def next_double(self):
         return float(next(self) & 0x1fffffffffffff) / 2**53
     
@@ -43,7 +37,7 @@ class Cracker(object):
 
         self.solver = z3.Solver()
 
-        # The known variable will contain the values that we generated in Firefox
+       
         self.known = known_values
     
     def __next__(self):
@@ -73,7 +67,7 @@ class Cracker(object):
 def main():
     known_values = [float(v) for v in sys.argv[1].split(",")]
     
-    # We crack the state of the random number generator.
+  
     cracker = Cracker(known_values)
     (s0, s1) = cracker.crack()
     
