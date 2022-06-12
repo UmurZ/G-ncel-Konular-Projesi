@@ -3,7 +3,7 @@ import sys
 import itertools
 
 
-class XorShift128Plus(object):
+class XorShift(object):
     def __init__(self, s0, s1):
         self.s0 = s0
         self.s1 = s1
@@ -30,7 +30,7 @@ class XorShift128Plus(object):
         return float(next(self) & 0x1fffffffffffff) / 2**53
     
 class Cracker(object):
-    def __init__(self, known_values):
+    def __init__(self, bilinmeyen_deger):
         self.s0 = z3.BitVec('s0', 64)
         self.s1 = z3.BitVec('s1', 64)
         self.state = [self.s0, self.s1]
@@ -38,7 +38,7 @@ class Cracker(object):
         self.solver = z3.Solver()
 
        
-        self.known = known_values
+        self.known = bilinmeyen_deger
     
     def __next__(self):
         s1 = self.state[0]
@@ -65,13 +65,13 @@ class Cracker(object):
         return (s0, s1)
  
 def main():
-    known_values = [float(v) for v in sys.argv[1].split(",")]
+    bilinmeyen_deger = [float(v) for v in sys.argv[1].split(",")]
     
   
-    cracker = Cracker(known_values)
+    cracker = Cracker(bilinmeyen_deger)
     (s0, s1) = cracker.crack()
     
-    prng = XorShift128Plus(s0, s1)
+    prng = XorShift(s0, s1)
     for _ in itertools.repeat(None, 15):
         print(prng.next_double())
     
